@@ -124,3 +124,51 @@ def test_back_track_without_history(robot):
     assert state['direction'] == Direction.NORTH
     assert state['row'] == 10
     assert state['col'] == 1
+
+
+def test_multiple_back_tracks_without_history(robot):
+    robot.back_track()
+    robot.back_track()
+    state = robot.state()
+    assert state['direction'] == Direction.NORTH
+    assert state['row'] == 10
+    assert state['col'] == 1
+
+
+def test_back_track_after_move(robot):
+    robot.move()
+    robot.back_track()
+    state = robot.state()
+    assert state['direction'] == Direction.NORTH
+    assert state['row'] == 10
+    assert state['col'] == 1
+
+
+def test_back_track_after_turn(robot):
+    robot.turn()
+    robot.back_track()
+    state = robot.state()
+    assert state['direction'] == Direction.NORTH
+    assert state['row'] == 10
+    assert state['col'] == 1
+
+
+def test_one_back_track_after_multiple_moves(robot):
+    robot.move()
+    robot.move()
+    robot.back_track()
+    state = robot.state()
+    assert state['direction'] == Direction.NORTH
+    assert state['row'] == 9
+    assert state['col'] == 1
+
+
+def test_multiple_back_tracks_after_multiple_moves(robot):
+    robot.move()
+    robot.move()
+    robot.back_track()
+    robot.back_track()
+    state = robot.state()
+    assert state['direction'] == Direction.NORTH
+    assert state['row'] == 10
+    assert state['col'] == 1

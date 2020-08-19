@@ -30,12 +30,11 @@ class Robot:
     def __init__(self):
         self._history: List[Robot.State] = list()
         self._state: Robot.state = Robot.State(Direction.NORTH, 10, 1)
-        self._history.append(self._state)
 
     def turn(self):
+        self._history.append(self._state)
         self._state = self._state.clone()
         self._state.direction = self._state.direction.next()
-        self._history.append(self._state)
 
     def move(self):
         error = (self._state.direction == Direction.NORTH and self._state.row == 1) or \
@@ -45,8 +44,8 @@ class Robot:
         if error:
             raise IllegalMoveException
 
-        self._state = self._state.clone()
         self._history.append(self._state)
+        self._state = self._state.clone()
 
         if self._state.direction == Direction.NORTH:
             self._state.row -= 1
@@ -58,7 +57,11 @@ class Robot:
             self._state.col -= 1
 
     def back_track(self):
-        self._state = self._history.pop()
+        try:
+            self._state = self._history.pop()
+        except IndexError:
+            # No history
+            pass
 
     def state(self):
         return {
