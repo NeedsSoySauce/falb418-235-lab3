@@ -22,12 +22,14 @@ def test_east_turn(robot):
     state = robot.state()
     assert state['direction'] == Direction.EAST
 
+
 def test_south_turn(robot):
     robot.turn()
     robot.turn()
 
     state = robot.state()
     assert state['direction'] == Direction.SOUTH
+
 
 def test_west_turn(robot):
     robot.turn()
@@ -36,6 +38,7 @@ def test_west_turn(robot):
 
     state = robot.state()
     assert state['direction'] == Direction.WEST
+
 
 def test_north_turn(robot):
     robot.turn()
@@ -46,12 +49,38 @@ def test_north_turn(robot):
     state = robot.state()
     assert state['direction'] == Direction.NORTH
 
-def test_illegal_move(robot):
-    robot.turn();
-    robot.turn();
+
+def test_illegal_move_east(robot):
+    robot.turn()
+
+    with pytest.raises(IllegalMoveException):
+        for _ in range(10):
+            robot.move()
+
+
+def test_illegal_move_south(robot):
+    robot.turn()
+    robot.turn()
+
+    with pytest.raises(IllegalMoveException):
+        while True:
+            robot.move()
+
+
+def test_illegal_move_west(robot):
+    robot.turn()
+    robot.turn()
+    robot.turn()
 
     with pytest.raises(IllegalMoveException):
         robot.move()
+
+
+def test_illegal_move_north(robot):
+    with pytest.raises(IllegalMoveException):
+        for _ in range(10):
+            robot.move()
+
 
 def test_move_north(robot):
     robot.move()
@@ -66,4 +95,3 @@ def test_back_track_without_history(robot):
     assert state['direction'] == Direction.NORTH
     assert state['row'] == 10
     assert state['col'] == 1
-
