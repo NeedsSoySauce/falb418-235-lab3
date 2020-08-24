@@ -52,10 +52,11 @@ def test_north_turn(robot):
 
 def test_illegal_move_east(robot):
     robot.turn()
+    for _ in range(9):
+        robot.move()
 
     with pytest.raises(IllegalMoveException):
-        for _ in range(10):
-            robot.move()
+        robot.move()
 
 
 def test_illegal_move_south(robot):
@@ -63,8 +64,7 @@ def test_illegal_move_south(robot):
     robot.turn()
 
     with pytest.raises(IllegalMoveException):
-        while True:
-            robot.move()
+        robot.move()
 
 
 def test_illegal_move_west(robot):
@@ -77,9 +77,11 @@ def test_illegal_move_west(robot):
 
 
 def test_illegal_move_north(robot):
+    for _ in range(9):
+        robot.move()
+
     with pytest.raises(IllegalMoveException):
-        for _ in range(10):
-            robot.move()
+        robot.move()
 
 
 def test_move_east(robot):
